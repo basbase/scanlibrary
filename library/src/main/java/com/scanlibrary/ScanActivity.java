@@ -53,6 +53,7 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
 
     @Override
     public void onScanFinish(Uri uri) {
+        Log.d("BASBASE", "ScanActivity onScanFinish");
         ResultFragment fragment = new ResultFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ScanConstants.SCANNED_RESULT, uri);
