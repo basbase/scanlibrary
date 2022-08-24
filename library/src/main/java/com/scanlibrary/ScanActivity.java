@@ -29,7 +29,7 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         bundle.putInt(ScanConstants.OPEN_INTENT_PREFERENCE, getPreferenceContent());
         bundle.putInt("quality", getIntent().getIntExtra("quality", 1));
         String uri = getIntent().getStringExtra("uri", "");
-        Log.d(TAG, "bundle.putString(\"uri\", uri); "+uri);
+        Log.d("BASBASE", "bundle.putString(\"uri\", uri); "+uri);
         bundle.putString("uri", uri);
         fragment.setArguments(bundle);
         android.app.FragmentManager fragmentManager = getFragmentManager();

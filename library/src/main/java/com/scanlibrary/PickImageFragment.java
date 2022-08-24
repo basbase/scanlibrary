@@ -67,7 +67,7 @@ public class PickImageFragment extends Fragment {
 
         if (isIntentUriSet()){
             Uri uri = getIntentUri();
-            Log.d(TAG, "Uri uri = getIntentUri();"+ uri)
+            Log.d("BASBASE", "Uri uri = getIntentUri();"+ uri)
             scanner.onBitmapSelect(uri);
         } else if (isIntentPreferenceSet()) {
             handleIntentPreference();
@@ -106,7 +106,9 @@ public class PickImageFragment extends Fragment {
     }
     private boolean isIntentUriSet() {
         String uri = getArguments().getString("uri", "");
-        return !uri.equals("");
+        boolean isSet = !uri.equals("");
+        Log.d("BASBASE", "isIntentUriSet"+isSet);
+        return isSet;
     }
 
     private Uri getIntentUri() {
