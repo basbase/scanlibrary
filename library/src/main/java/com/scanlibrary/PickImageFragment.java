@@ -64,7 +64,12 @@ public class PickImageFragment extends Fragment {
         galleryButton = (ImageButton) view.findViewById(R.id.selectButton);
         galleryButton.setOnClickListener(new GalleryClickListener());
         imagePath = getActivity().getApplicationContext().getExternalCacheDir().getPath() + "/scanSample";
-        if (isIntentPreferenceSet()) {
+
+        if (isIntentUriSet()){
+            Uri uri = getIntentUri();
+            Log.d(TAG, "Uri uri = getIntentUri();"+ uri)
+            scanner.onBitmapSelect(uri);
+        } else if (isIntentPreferenceSet()) {
             handleIntentPreference();
         } else {
             getActivity().finish();
@@ -98,6 +103,15 @@ public class PickImageFragment extends Fragment {
     private int getIntentPreference() {
         int preference = getArguments().getInt(ScanConstants.OPEN_INTENT_PREFERENCE, 0);
         return preference;
+    }
+    private boolean isIntentUriSet() {
+        String uri = getArguments().getString("uri", "");
+        return !uri.equals("");
+    }
+
+    private Uri getIntentUri() {
+        String uri = getArguments().getString("uri", "");
+        return Uri.parse(uri);
     }
 
 

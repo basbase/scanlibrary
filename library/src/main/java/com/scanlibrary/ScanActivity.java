@@ -14,6 +14,7 @@ import android.util.Log;
  */
 public class ScanActivity extends Activity implements IScanner, ComponentCallbacks2 {
 
+    private static String TAG = 'ScanActivity'
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,9 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         Bundle bundle = new Bundle();
         bundle.putInt(ScanConstants.OPEN_INTENT_PREFERENCE, getPreferenceContent());
         bundle.putInt("quality", getIntent().getIntExtra("quality", 1));
+        String uri = getIntent().getStringExtra("uri", "");
+        Log.d(TAG, "bundle.putString(\"uri\", uri); "+uri);
+        bundle.putString("uri", uri);
         fragment.setArguments(bundle);
         android.app.FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -98,11 +102,13 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
                    If the event is TRIM_MEMORY_COMPLETE, the process will be one of
                    the first to be terminated.
                 */
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.low_memory)
-                        .setMessage(R.string.low_memory_message)
-                        .create()
-                        .show();
+
+                Log.w(TAG, "Low memory alert not shown");
+//                new AlertDialog.Builder(this)
+//                        .setTitle(R.string.low_memory)
+//                        .setMessage(R.string.low_memory_message)
+//                        .create()
+//                        .show();
                 break;
             default:
                 /*
