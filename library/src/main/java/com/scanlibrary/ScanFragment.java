@@ -194,7 +194,23 @@ public class ScanFragment extends Fragment {
         float y4 = (points.get(3).y) * yRatio;
         Log.d("", "POints(" + x1 + "," + y1 + ")(" + x2 + "," + y2 + ")(" + x3 + "," + y3 + ")(" + x4 + "," + y4 + ")");
         Bitmap _bitmap = ((ScanActivity) getActivity()).getScannedBitmap(original, x1, y1, x2, y2, x3, y3, x4, y4);
-        return _bitmap;
+        int w = _bitmap.getWidth();
+        int h = _bitmap.getHeight();
+        float scale = 1;
+
+        if (scanner.targetWidth > 0 && scanner.targetHeight > 0) {
+            scale = Math.min((float) scanner.targetWidth / w, (float) scanner.targetHeight / h);
+
+            if (scale < 1) {
+                h *= scale;
+                w *= scale;
+            }
+        }
+
+        Bitmap scaled = Bitmap.createScaledBitmap(_bitmap, w, h, true);
+        Log.d("BASBASE","scanner.outputQuality:"+scanner.outputQuality);
+
+        return scaled;
     }
 
     private class ScanAsyncTask extends AsyncTask<Void, Void, Bitmap> {
@@ -214,7 +230,7 @@ public class ScanFragment extends Fragment {
         @Override
         protected Bitmap doInBackground(Void... params) {
             Bitmap bitmap =  getScannedBitmap(original, points);
-            Uri uri = Utils.getUri(getActivity(), bitmap);
+            Uri uri = Utils.getUri(getActivity(), bitmap, scanner.outputQuality);
             scanner.onScanFinish(uri);
             return bitmap;
         }

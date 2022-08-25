@@ -10,4 +10,7 @@ public interface IScanner {
     void onBitmapSelect(Uri uri);
 
     void onScanFinish(Uri uri);
+    int outputQuality=80;
+    int targetWidth=1600;
+    int targetHeight=1600;
 }

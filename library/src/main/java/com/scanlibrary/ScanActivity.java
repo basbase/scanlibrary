@@ -17,6 +17,10 @@ import android.util.Log;
 public class ScanActivity extends Activity implements IScanner, ComponentCallbacks2 {
 
     private static String TAG = "ScanActivity";
+    public int outputQuality=80;
+    public int targetWidth=1600;
+    public int targetHeight=1600;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,11 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         Bundle bundle = new Bundle();
         bundle.putInt(ScanConstants.OPEN_INTENT_PREFERENCE, getPreferenceContent());
         bundle.putInt("quality", getIntent().getIntExtra("quality", 1));
+
+
+        outputQuality = getIntent().getIntExtra("outputQuality", 80);
+        targetWidth = getIntent().getIntExtra("targetWidth", 1600);
+        targetHeight = getIntent().getIntExtra("targetHeight", 1600);
         String uri = getIntent().getStringExtra("uri");
         if(uri == null){
             uri = "";

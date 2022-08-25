@@ -21,12 +21,14 @@ public class Utils {
     }
 
     public static Uri getUri(Context context, Bitmap bitmap) {
+        return Utils.getUri(context, bitmap,100);
+    }
+
+    public static Uri getUri(Context context, Bitmap bitmap, int outputQuality) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        Log.wtf("PATH", "before insertImage");
+        bitmap.compress(Bitmap.CompressFormat.JPEG, outputQuality, bytes);
         // String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title" + " - " + (currentTime = Calendar.getInstance().getTime()), null);
-        Log.wtf("PATH", path);
         return Uri.parse(path);
     }
 
