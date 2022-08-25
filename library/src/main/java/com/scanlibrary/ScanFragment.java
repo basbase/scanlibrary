@@ -39,6 +39,7 @@ public class ScanFragment extends Fragment {
     private ProgressDialogFragment progressDialogFragment;
     private IScanner scanner;
     private Bitmap original;
+    private int outputQuality;
 
     @Override
     public void onAttach(Activity activity) {
@@ -198,7 +199,7 @@ public class ScanFragment extends Fragment {
         int h = _bitmap.getHeight();
         float scale = 1;
 
-        int outputQuality = getArguments().getInt("outputQuality", 79);
+        outputQuality = getArguments().getInt("outputQuality", 79);
         int targetWidth = getArguments().getInt("targetWidth", 1599);
         int targetHeight = getArguments().getInt("targetHeight", 1599);
 
@@ -238,7 +239,7 @@ public class ScanFragment extends Fragment {
         @Override
         protected Bitmap doInBackground(Void... params) {
             Bitmap bitmap =  getScannedBitmap(original, points);
-            Uri uri = Utils.getUri(getActivity(), bitmap, scanner.outputQuality);
+            Uri uri = Utils.getUri(getActivity(), bitmap, outputQuality);
             scanner.onScanFinish(uri);
             return bitmap;
         }
