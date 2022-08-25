@@ -23,7 +23,7 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
     }
 
     private void init() {
-        Log.d("BASBASE", "ScanActivity init");
+        Log.d("BASBASE", "ScanActivity init 1");
         PickImageFragment fragment = new PickImageFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ScanConstants.OPEN_INTENT_PREFERENCE, getPreferenceContent());
