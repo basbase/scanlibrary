@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.ComponentCallbacks2;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -61,15 +63,36 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
     @Override
     public void onScanFinish(Uri uri) {
         Log.d("BASBASE", "ScanActivity onScanFinish");
-        ResultFragment fragment = new ResultFragment();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ScanConstants.SCANNED_RESULT, uri);
-        fragment.setArguments(bundle);
-        android.app.FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.content, fragment);
-        fragmentTransaction.addToBackStack(ResultFragment.class.toString());
-        fragmentTransaction.commit();
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Intent data = new Intent();
+                    data.putExtra(ScanConstants.SCANNED_RESULT, uri);
+                    setResult(Activity.RESULT_OK, data);
+                    System.gc();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+//
+//        ResultFragment fragment = new ResultFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable(ScanConstants.SCANNED_RESULT, uri);
+//        fragment.setArguments(bundle);
+//        android.app.FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.add(R.id.content, fragment);
+//        fragmentTransaction.addToBackStack(ResultFragment.class.toString());
+//        fragmentTransaction.commit();
     }
 
     @Override
