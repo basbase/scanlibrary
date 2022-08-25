@@ -198,6 +198,8 @@ public class ScanFragment extends Fragment {
         int h = _bitmap.getHeight();
         float scale = 1;
 
+        Log.d("BASBASE","w:"+w+" h:"+h+" scanner.targetWidth:"+scanner.targetWidth+ " scanner.targetHeight:"+scanner.targetHeight);
+
         if (scanner.targetWidth > 0 && scanner.targetHeight > 0) {
             scale = Math.min((float) scanner.targetWidth / w, (float) scanner.targetHeight / h);
 
@@ -205,6 +207,8 @@ public class ScanFragment extends Fragment {
                 h *= scale;
                 w *= scale;
             }
+
+            Log.d("BASBASE","scale:"+scale+ " w:"+w+" h:"+h);
         }
 
         Bitmap scaled = Bitmap.createScaledBitmap(_bitmap, w, h, true);

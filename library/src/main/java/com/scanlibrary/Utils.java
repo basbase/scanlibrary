@@ -2,10 +2,12 @@ package com.scanlibrary;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -28,7 +30,9 @@ public class Utils {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, outputQuality, bytes);
         // String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title" + " - " + (currentTime = Calendar.getInstance().getTime()), null);
+        byte[] byteArray = bytes.toByteArray();
+        Bitmap compressed = BitmapFactory.decodeByteArray(byteArray, 0,byteArray.length);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), compressed, "Title" + " - " + (currentTime = Calendar.getInstance().getTime()), null);
         return Uri.parse(path);
     }
 
