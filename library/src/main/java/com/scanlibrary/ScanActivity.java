@@ -14,7 +14,7 @@ import android.util.Log;
  */
 public class ScanActivity extends Activity implements IScanner, ComponentCallbacks2 {
 
-    private static String TAG = 'ScanActivity'
+    private static String TAG = "ScanActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,10 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         Bundle bundle = new Bundle();
         bundle.putInt(ScanConstants.OPEN_INTENT_PREFERENCE, getPreferenceContent());
         bundle.putInt("quality", getIntent().getIntExtra("quality", 1));
-        String uri = getIntent().getStringExtra("uri", "");
+        String uri = getIntent().getStringExtra("uri");
+        if(uri == null){
+            uri = "";
+        }
         Log.d("BASBASE", "bundle.putString(\"uri\", uri); "+uri);
         bundle.putString("uri", uri);
         fragment.setArguments(bundle);
