@@ -8,6 +8,7 @@ import android.net.Uri;
 public interface IScanner {
 
     void onBitmapSelect(Uri uri);
+    void onBitmapSelect(Uri uri, int outputQuality, int targetWidth, int targetHeight);
 
     void onScanFinish(Uri uri);
     int outputQuality=80;

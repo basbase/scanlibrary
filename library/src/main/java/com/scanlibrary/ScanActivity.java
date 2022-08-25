@@ -36,15 +36,21 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         bundle.putInt("quality", getIntent().getIntExtra("quality", 1));
 
 
-        outputQuality = getIntent().getIntExtra("outputQuality", 80);
-        targetWidth = getIntent().getIntExtra("targetWidth", 1600);
-        targetHeight = getIntent().getIntExtra("targetHeight", 1600);
+        int outputQuality = getIntent().getIntExtra("outputQuality", 80);
+        int targetWidth = getIntent().getIntExtra("targetWidth", 1600);
+        int targetHeight = getIntent().getIntExtra("targetHeight", 1600);
         String uri = getIntent().getStringExtra("uri");
         if(uri == null){
             uri = "";
         }
-        Log.d("BASBASE", "bundle.putString(\"uri\", uri); "+uri);
+        Log.d("BASBASE", "bundle.putString(\"uri\", uri); "+uri+
+                        "outputQuality"+outputQuality+
+                "targetWidth"+targetWidth+
+                "targetHeight"+targetHeight);
         bundle.putString("uri", uri);
+        bundle.putInt("outputQuality", outputQuality);
+        bundle.putInt("targetWidth", targetWidth);
+        bundle.putInt("targetHeight", targetHeight);
         fragment.setArguments(bundle);
         android.app.FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -61,6 +67,22 @@ public class ScanActivity extends Activity implements IScanner, ComponentCallbac
         ScanFragment fragment = new ScanFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(ScanConstants.SELECTED_BITMAP, uri);
+        fragment.setArguments(bundle);
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.content, fragment);
+//        fragmentTransaction.addToBackStack(ScanFragment.class.toString());
+        fragmentTransaction.commit();
+    }
+    @Override
+    public void onBitmapSelect(Uri uri, int outputQuality, int targetWidth, int targetHeight) {
+        ScanFragment fragment = new ScanFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ScanConstants.SELECTED_BITMAP, uri);
+        bundle.putInt("outputQuality", outputQuality);
+        bundle.putInt("targetWidth", targetWidth);
+        bundle.putInt("targetHeight", targetHeight);
+
         fragment.setArguments(bundle);
         android.app.FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
